@@ -1,5 +1,9 @@
 {
   "name": "pokechallenge",
+  "author": {
+    "email": "ivaneusebioperez",
+    "name": "Ivan Eusebio"
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
