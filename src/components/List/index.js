@@ -51,16 +51,17 @@ const withPaginated = (Component) => (props) =>
     </div>
   </div>
 
-
-
 const ListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   background-color: #fff,
   width: '100%';
   height: '100%'
 `;
 
- const List = ({ list, renderItem }) =>
-  <ListContainer>
+ const List = ({ list, renderItem, isGrid }) =>
+  <ListContainer isGrid={isGrid}>
     {list.map((item, index) => renderItem(item, index))}
   </ListContainer>
 

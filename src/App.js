@@ -1,26 +1,46 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import styled from 'styled-components'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import styled from 'styled-components';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 
 import store from './store';
 import PokemonList from './pages/PokemonList';
 import PokemonDetail from './pages/PokemonDetail';
 
+const styles = {
+  root: {
+    flexGrow: 1,
+    height: 80
+  },
+  appBar: {
+    height: 65
+  },
+  title: {
+    padding: 20
+  }
+};
 
 const Container = styled.div`
   background-color: #fff;
   display: flex;
-  flex: 1;
   flex-direction: column;
   margin: auto;
-  padding: 50px;
 `;
+
 class App extends Component {
   render() {
+    const { classes } = this.props;
     return (
       <Provider store={store}>
         <Container>
+          <AppBar position="static" color="secondary" className={classes.appBar}>
+            <Typography variant="title" color="inherit" className={classes.title}>
+                Pokemon List
+            </Typography>
+          </AppBar>
           <BrowserRouter>
           <Switch>
             <Route exact path='/' component={PokemonList}/>
@@ -33,4 +53,5 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
+

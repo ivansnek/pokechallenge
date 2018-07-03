@@ -25,10 +25,8 @@ class PokemonList extends React.Component {
     <PokemonCard key={`${item.url}${index}`} name={item.name} onPress={() => this.onItemPress(item)}/>
 
   render() {
-    console.log('List', this.props.list)
     return (
       <React.Fragment>
-        <h1> Pokemon List</h1>
         <ListWithLoadingWithInfinite
           list={this.props.list}
           renderItem={this.renderItem}
