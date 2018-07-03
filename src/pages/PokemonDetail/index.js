@@ -66,7 +66,7 @@ class PokemonDetail extends React.Component {
 
   _renderTypes = () => (
     <DetailContainer
-      title="Abilities"
+      title="Type"
       style={this.props.classes.cardContainer}
     >
      {this.props.pokemon.types.map((item, index) => 
@@ -79,7 +79,7 @@ class PokemonDetail extends React.Component {
 
   _renderStats = () => (
     <DetailContainer
-      title="Abilities"
+      title="Stats"
       style={this.props.classes.cardContainer}
     >
        {this.props.pokemon.stats.map((item, index) =>
