@@ -18,6 +18,6 @@ export default function (state = INITIAL_STATE, action) {
     case LOADING_POKEMON_DATA:
       return { ...state, loading: action.payload }
     default:
-    return INITIAL_STATE;
+    return { ...state };
   }
 }
