@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const IMAGE_URL = 'https://img.pokemondb.net/sprites/silver/normal/#.png';
 
 export type PokemonCardProps = {
-  name: string
+  name: string,
   onPress: () => void,
   classes: object
 };

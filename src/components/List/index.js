@@ -32,7 +32,7 @@ const withInfiniteScroll = (Component: React.Node): React.Component<*, ListProps
     }
   }
 
-const withLoading = (Component: React.Node): React.StatelessComponent<*, ListProps> => (prop: ListProps) =>
+const withLoading = (Component: React.Node): React.StatelessComponent<*, ListProps> => (props: ListProps) =>
   <div>
     <Component {...props} />
 
