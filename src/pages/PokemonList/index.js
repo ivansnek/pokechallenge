@@ -11,7 +11,7 @@ import List, { withLoading, withInfiniteScroll, withPaginated, type ListProps } 
 import { type PokemonListItemType } from './types';
 
 type Props = {
-  loadPokemonList: () => void
+  loadPokemonList: () => void,
   nextURL: string,
   changePokemonURL: () => void,
   loading: boolean,
