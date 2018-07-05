@@ -1,3 +1,4 @@
+// flow
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -6,7 +7,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
-const IMAGE_URL = 'https://img.pokemondb.net/sprites/silver/normal/#.png'
+const IMAGE_URL = 'https://img.pokemondb.net/sprites/silver/normal/#.png';
+
+export type PokemonCardProps = {
+  name: string
+  onPress: () => void,
+  classes: object
+};
 
 const styles = {
   card: {
@@ -25,7 +32,7 @@ const styles = {
     textAlign: 'center'
   }
 };
-const PokemonCard = ({ name, onPress, classes }) => {
+const PokemonCard = ({ name, onPress, classes }: PokemonCardProps): React.StatelessComponent<PokemonCardProps> => {
   return (
     <Link to={`/pokemon/${name}`}>
       <Card className={classes.card} onClick={onPress}>
