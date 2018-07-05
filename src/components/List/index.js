@@ -1,7 +1,14 @@
+// flow
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-const withInfiniteScroll = (Component) =>
+type ListProps = {
+  isGrid: boolean,
+  list: Array<any>,
+  renderItem: (item: React.Node, index: number) => React.Node
+}
+
+const withInfiniteScroll = (Component: React.Node): React.Component<*, ListProps> =>
   class WithInfiniteScroll extends React.Component {
     componentDidMount() {
       window.addEventListener('scroll', this.onScroll, false);
@@ -11,7 +18,7 @@ const withInfiniteScroll = (Component) =>
       window.removeEventListener('scroll', this.onScroll, false);
     }
 
-    onScroll = () => {
+    onScroll = (): void => {
       if (
         (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
         this.props.list.length && !this.props.isLoading
@@ -25,7 +32,7 @@ const withInfiniteScroll = (Component) =>
     }
   }
 
-const withLoading = (Component) => (props) =>
+const withLoading = (Component: React.Node): React.StatelessComponent<*, ListProps> => (prop: ListProps) =>
   <div>
     <Component {...props} />
 
@@ -34,7 +41,7 @@ const withLoading = (Component) => (props) =>
     </div>
   </div>
 
-const withPaginated = (Component) => (props) =>
+const withPaginated = (Component: React.Node): React.StatelessComponent<*, ListProps> => (props) =>
   <div>
     <Component {...props} />
 
@@ -51,7 +58,7 @@ const withPaginated = (Component) => (props) =>
     </div>
   </div>
 
-const ListContainer = styled.div`
+const ListContainer: React.Node = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -60,11 +67,11 @@ const ListContainer = styled.div`
   height: '100%'
 `;
 
- const List = ({ list, renderItem, isGrid }) =>
+ const List = ({ list, renderItem, isGrid }: ListProps): React.StatelessComponent<ListProps> =>
   <ListContainer isGrid={isGrid}>
     {list.map((item, index) => renderItem(item, index))}
   </ListContainer>
 
-export { withLoading, withInfiniteScroll, withPaginated };
+export { withLoading, withInfiniteScroll, withPaginated, ListProps };
 
 export default List;

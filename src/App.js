@@ -1,3 +1,5 @@
+// flow
+
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import styled from 'styled-components';
@@ -9,6 +11,12 @@ import { withStyles } from '@material-ui/core/styles';
 import store from './store';
 import PokemonList from './pages/PokemonList';
 import PokemonDetail from './pages/PokemonDetail';
+
+type Props = {
+  classes: {}
+};
+
+type State = {};
 
 const styles = {
   root: {
@@ -30,7 +38,7 @@ const Container = styled.div`
   margin: auto;
 `;
 
-class App extends Component {
+class App extends React.Component<Props, State> {
   render() {
     const { classes } = this.props;
     return (

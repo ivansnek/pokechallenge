@@ -1,27 +1,40 @@
+// flow
+
 import React from 'react';
 import { connect } from 'react-redux';
-import { compose } from 'recompose';
+import { compose, type HOC } from 'recompose';
 
 import { loadPokemonList } from './actions';
 import { changePokemonURL } from '../PokemonDetail/actions';
 import PokemonCard from '../../components/PokemonCard';
-import List, { withLoading, withInfiniteScroll, withPaginated } from '../../components/List';
-class PokemonList extends React.Component {
+import List, { withLoading, withInfiniteScroll, withPaginated, type ListProps } from '../../components/List';
+import { type PokemonListItemType } from './types';
+
+type Props = {
+  loadPokemonList: () => void
+  nextURL: string,
+  changePokemonURL: () => void,
+  loading: boolean,
+  list: Array<PokemonListItemType>
+};
+
+type State = {};
+class PokemonList extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.loadPokemonList(this.props.nextURL);
   }
 
-  onPaginatedSearch= () => {
+  onPaginatedSearch= (): void => {
     const { loadPokemonList, nextURL } = this.props;
     loadPokemonList(nextURL);
   }
 
-  onItemPress = item => {
+  onItemPress = (item: PokemonListItemType): void => {
     this.props.changePokemonURL(item.url);
   }
 
-  renderItem = (item, index) =>
+  renderItem = (item: PokemonListItemType, index: number): React.StatelessFunctionalComponent<Props> =>
     <PokemonCard key={`${item.url}${index}`} name={item.name} onPress={() => this.onItemPress(item)}/>
 
   render() {
@@ -38,7 +51,7 @@ class PokemonList extends React.Component {
   }
 }
 
-const ListWithLoadingWithInfinite  = compose(
+const ListWithLoadingWithInfinite: HOC<*, ListProps>  = compose(
   withLoading,
   withInfiniteScroll
 )(List);

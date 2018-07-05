@@ -1,3 +1,4 @@
+// flow
 import React from 'react';
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
@@ -14,28 +15,45 @@ import Icon from '@material-ui/core/Icon';
 import Card from '@material-ui/core/Card';
 
 import { loadPokemon } from './actions';
+import { PokemonType } from './types';
 import CONFIG from '../../utils/config';
 
-const Container = styled.div`
+type DetailContainerProps = {
+  style: object,
+  title: string,
+  children: React.Node
+}
+
+type Props = {
+  url: string,
+  pokemon: PokemonType,
+  loadPokemon: () => void,
+  location: object,
+  classes: object
+};
+
+type State = {};
+
+const Container: React.Node = styled.div`
   width: '100%';
   height: '100%';
   background-color: white;
   padding: 25px;
 `;
 
-const EmptyContainer = styled(Container)`
+const EmptyContainer: React.Node = styled(Container)`
   &&& {
     margin: auto;
     align-items: center;
   }`;
 
-const RowContainer = styled.div`
+const RowContainer: React.Node = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 `;
 
-const IMAGE_URL = 'https://img.pokemondb.net/sprites/silver/normal/#.png'
+const IMAGE_URL = 'https://img.pokemondb.net/sprites/silver/normal/#.png';
 
 const styles = {
   avatar : { width:200, height: 200, borderWidth: 2, borderColor: '#ddd' },
@@ -43,7 +61,8 @@ const styles = {
   cardContainer: { width: '50%', minHeight: 100, margin: 10 }
 };
 
-const DetailContainer = ({style, title, children}) => (
+const DetailContainer =
+  ({style, title, children}: DetailContainerProps): React.StatelessComponent<DetailContainerProps> => (
   <Card className={style}>
     <List>
       <ListItem key={"pokemon-title"+title} button={false}>
@@ -56,7 +75,7 @@ const DetailContainer = ({style, title, children}) => (
     </List>
   </Card>
 );
-class PokemonDetail extends React.Component {
+class PokemonDetail extends React.Component<Props, State> {
   componentDidMount(){
     const { url, loadPokemon, location } = this.props;
     const pokemon = location.pathname;
@@ -64,7 +83,7 @@ class PokemonDetail extends React.Component {
     loadPokemon(loadURL);
   }
 
-  _renderTypes = () => (
+  _renderTypes = (): React.StatelessComponent<*, DetailContainerProps> => (
     <DetailContainer
       title="Type"
       style={this.props.classes.cardContainer}
@@ -77,7 +96,7 @@ class PokemonDetail extends React.Component {
     </DetailContainer>
   );
 
-  _renderStats = () => (
+  _renderStats = (): React.StatelessComponent<*, DetailContainerProps> => (
     <DetailContainer
       title="Stats"
       style={this.props.classes.cardContainer}
@@ -90,7 +109,7 @@ class PokemonDetail extends React.Component {
     </DetailContainer>
   );
 
-  _renderAbilities = () => (
+  _renderAbilities = (): React.StatelessComponent<*, DetailContainerProps> => (
     <DetailContainer
       title="Abilities"
       style={this.props.classes.cardContainer}
