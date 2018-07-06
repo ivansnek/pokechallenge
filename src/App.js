@@ -50,10 +50,10 @@ class App extends React.Component<Props, State> {
             </Typography>
           </AppBar>
           <BrowserRouter>
-          <Switch>
-            <Route exact path='/' component={PokemonList}/>
-            <Route path='/pokemon/:id' component={PokemonDetail}/>
-          </Switch>
+            <Switch>
+              <Route exact path='/' render={({ match }) => <PokemonList offseted={!!!match}/>}/>
+              <Route path='/pokemon/:id' render={({ match, history: { location } }) => <PokemonDetail location={location} offseted={!!!match}/>}/>
+            </Switch>
           </BrowserRouter>
         </Container>
       </Provider>

@@ -18,14 +18,23 @@ export type PokemonCardProps = {
 const styles = {
   card: {
     minWidth: 200,
+    minHeight: 200,
     margin: 20,
     flexBasis: 200,
-    backgroundColor: '#F9FBE7',
+    backgroundColor: '#fff',
+    '&:hover': {
+      backgroundColor: '#FFEBEE'
+    }
   },
   media: {
-    height: 80,
     margin: 'auto',
+    height: 80,
     width:80,
+    '&:hover': {
+      height: 110,
+      width: 110,
+      backgroundColor: '#FFEBEE'
+    }
   },
   content: {
     margin: 'auto',

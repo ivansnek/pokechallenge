@@ -30,7 +30,8 @@ type Props = {
   pokemon: PokemonType,
   loadPokemon: () => void,
   location: object,
-  classes: object
+  classes: object,
+  offseted: boolean
 };
 
 type State = {};
@@ -40,6 +41,11 @@ const Container: React.Node = styled.div`
   height: '100%';
   background-color: white;
   padding: 25px;
+  left: ${props => props.offseted ? '-100%': '0%'}
+  transition: left 200ms;
+  > * {
+    flex: 0 0 50%;
+  }
 `;
 
 const EmptyContainer: React.Node = styled(Container)`
@@ -126,7 +132,7 @@ class PokemonDetail extends React.Component<Props, State> {
   render() {
     const { pokemon, classes, loading } = this.props;
     return (
-      <Container>
+      <Container offseted={this.props.offseted}>
         <Link to="/" >
           <Button variant="contained" color="primary" >
           Go Back

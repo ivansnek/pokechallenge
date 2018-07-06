@@ -3,6 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, type HOC } from 'recompose';
+import styled from 'styled-components';
 
 import { loadPokemonList } from './actions';
 import { changePokemonURL } from '../PokemonDetail/actions';
@@ -16,10 +17,23 @@ type Props = {
   nextURL: string,
   changePokemonURL: () => void,
   loading: boolean,
-  list: Array<PokemonListItemType>
+  list: Array<PokemonListItemType>,
+  offseted: boolean
 };
 
 type State = {};
+
+const Container: React.Node = styled.div`
+  width: '100%';
+  height: '100%';
+  background-color: white;
+  left: ${props => props.offseted ? '100%': '0'}
+  transition: left 200ms;
+  > * {
+    flex: 0 0 50%;
+  }
+`;
+
 class PokemonList extends React.Component<Props, State> {
 
   componentDidMount() {
@@ -42,14 +56,14 @@ class PokemonList extends React.Component<Props, State> {
 
   render() {
     return (
-      <React.Fragment>
+      <Container offseted={this.props.offseted}>
         <ListWithLoadingWithInfinite
           list={this.props.list}
           renderItem={this.renderItem}
           isLoading={this.props.loading}
           onPaginatedSearch={this.onPaginatedSearch}
         />
-      </React.Fragment>
+      </Container>
     );
   }
 }
