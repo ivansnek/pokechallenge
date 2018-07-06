@@ -9,6 +9,7 @@ import { changePokemonURL } from '../PokemonDetail/actions';
 import PokemonCard from '../../components/PokemonCard';
 import List, { withLoading, withInfiniteScroll, withPaginated, type ListProps } from '../../components/List';
 import { type PokemonListItemType } from './types';
+import { CLIENT_RENEG_WINDOW } from 'tls';
 
 type Props = {
   loadPokemonList: () => void,
@@ -26,8 +27,10 @@ class PokemonList extends React.Component<Props, State> {
   }
 
   onPaginatedSearch= (): void => {
-    const { loadPokemonList, nextURL } = this.props;
-    loadPokemonList(nextURL);
+    const { loadPokemonList, nextURL, previousURL } = this.props;
+    if (nextURL !== previousURL) {
+      loadPokemonList(nextURL);
+    }
   }
 
   onItemPress = (item: PokemonListItemType): void => {
@@ -43,7 +46,7 @@ class PokemonList extends React.Component<Props, State> {
         <ListWithLoadingWithInfinite
           list={this.props.list}
           renderItem={this.renderItem}
-          isLoading={this.props.isLoading}
+          isLoading={this.props.loading}
           onPaginatedSearch={this.onPaginatedSearch}
         />
       </React.Fragment>
@@ -57,6 +60,8 @@ const ListWithLoadingWithInfinite: HOC<*, ListProps>  = compose(
 )(List);
 
 
-const mapStateToProps = ({ pokemonList: { loading, list, nextURL} }) => ({ list, loading, nextURL });
+const mapStateToProps = ({ pokemonList: { loading, list, nextURL, previousURL} }) => ({
+  list, loading, nextURL, previousURL
+});
 
 export default connect(mapStateToProps, { loadPokemonList, changePokemonURL })(PokemonList);

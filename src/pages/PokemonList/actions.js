@@ -12,7 +12,8 @@ export const loadPokemonList = (nextUrl) => {
         dispatch({
           type: LOAD_POKEMON_LIST_SUCESS,
           payload: response.data.results,
-          url: response.data.next
+          url: response.data.next,
+          previous: response.data.previous
         });
       })
       .catch(error => {
