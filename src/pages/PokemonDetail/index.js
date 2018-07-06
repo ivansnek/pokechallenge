@@ -13,6 +13,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 import Card from '@material-ui/core/Card';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { loadPokemon } from './actions';
 import { PokemonType } from './types';
@@ -123,7 +124,7 @@ class PokemonDetail extends React.Component<Props, State> {
   );
 
   render() {
-    const { pokemon, classes } = this.props;
+    const { pokemon, classes, loading } = this.props;
     return (
       <Container>
         <Link to="/" >
@@ -131,37 +132,39 @@ class PokemonDetail extends React.Component<Props, State> {
           Go Back
           </Button>
         </Link>
-        {!!pokemon.name ? (
-          <React.Fragment>
-            <RowContainer>
-              <Avatar alt={pokemon.name} src={IMAGE_URL.replace('#', pokemon.name)} className={classes.avatar} />              
-              <Typography gutterBottom variant="headline" component="h1" className={classes.text}>
-                Name: {pokemon.name}
-              </Typography>
-              <Typography gutterBottom variant="headline" component="h2" className={classes.text}>
-                Weight: {pokemon.weight}
-              </Typography>
-            </RowContainer>
-            <RowContainer>
-              {this._renderAbilities()}
-              {this._renderStats()}
-            </RowContainer>
-            {this._renderTypes()}
-          </React.Fragment>
-        ) : (
-        <EmptyContainer>
-          <Typography gutterBottom variant="headline" component="h3">
-            Loading...
-          </Typography>
-        </EmptyContainer>
-      )}
+            {loading  && (
+              <EmptyContainer>
+                <CircularProgress />
+                <Typography gutterBottom variant="headline" component="h3">
+                  Loading...
+                </Typography>
+              </EmptyContainer>
+            )}
+            {!!pokemon.name && (
+              <React.Fragment>
+                <RowContainer>
+                  <Avatar alt={pokemon.name} src={IMAGE_URL.replace('#', pokemon.name)} className={classes.avatar} />              
+                  <Typography gutterBottom variant="headline" component="h1" className={classes.text}>
+                    Name: {pokemon.name}
+                  </Typography>
+                  <Typography gutterBottom variant="headline" component="h2" className={classes.text}>
+                    Weight: {pokemon.weight}
+                  </Typography>
+                </RowContainer>
+                <RowContainer>
+                  {this._renderAbilities()}
+                  {this._renderStats()}
+                </RowContainer>
+                {this._renderTypes()}
+              </React.Fragment>
+            )}
     </Container>
         
     );
   }
 }
 
-const mapStateToProps = ({ pokemon }) => ({ pokemon: pokemon.data, url: pokemon.url });
+const mapStateToProps = ({ pokemon }) => ({ pokemon: pokemon.data, url: pokemon.url, loading: pokemon.loading });
 
 const PokemonDetailMaterial = withStyles(styles)(PokemonDetail);
 

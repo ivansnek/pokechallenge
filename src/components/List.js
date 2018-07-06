@@ -1,10 +1,23 @@
 // flow
 import React from 'react';
 import styled from 'styled-components';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
+import _ from 'lodash';
+
+import { PokemonCardProps } from './PokemonCard';
+import { CLIENT_RENEG_WINDOW } from 'tls';
+
+const LoaderContainer: React.Node = styled.div`
+  display:block;
+  margin: auto;
+  padding: 50px;
+`;
 
 type ListProps = {
   isGrid: boolean,
-  list: Array<any>,
+  list: Array<PokemonCardProps>,
+  isLoading: boolean,
   renderItem: (item: React.Node, index: number) => React.Node
 }
 
@@ -20,7 +33,7 @@ const withInfiniteScroll = (Component: React.Node): React.Component<*, ListProps
 
     onScroll = (): void => {
       if (
-        (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) &&
+        (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 100) &&
         this.props.list.length && !this.props.isLoading
       ) {
         this.props.onPaginatedSearch();
@@ -33,30 +46,23 @@ const withInfiniteScroll = (Component: React.Node): React.Component<*, ListProps
   }
 
 const withLoading = (Component: React.Node): React.StatelessComponent<*, ListProps> => (props: ListProps) =>
-  <div>
+  <React.Fragment>
     <Component {...props} />
-
-    <div className="interactions">
-      {props.isLoading && <span>Loading...</span>}
-    </div>
-  </div>
+    <LoaderContainer>
+      {props.isLoading && <CircularProgress />}
+    </LoaderContainer>
+  </React.Fragment>
 
 const withPaginated = (Component: React.Node): React.StatelessComponent<*, ListProps> => (props) =>
-  <div>
+  <React.Fragment>
     <Component {...props} />
-
-    <div className="interactions">
-      {
-        (props.page !== null && !props.isLoading) &&
-        <button
-          type="button"
-          onClick={props.onPaginatedSearch}
-        >
-          More
-        </button>
-      }
-    </div>
-  </div>
+    {
+      (props.page !== null && !props.isLoading) &&
+      <Button variant="contained" color="primary" >
+        More
+      </Button>
+    }
+  </React.Fragment>
 
 const ListContainer: React.Node = styled.div`
   display: flex;
